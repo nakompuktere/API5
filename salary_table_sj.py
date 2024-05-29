@@ -1,15 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
-
-
-def predict_rub_salary_sJ(vacancy):
-    if vacancy["payment_from"] and vacancy["payment_to"]:
-        return int((vacancy["payment_from"] + vacancy["payment_to"])/2)
-    elif vacancy["payment_from"]:
-        return int(vacancy["payment_from"] * 0.8)
-    else:
-        return int(vacancy["payment_to"] * 1.2) 
+from tools import predict_rub_salary
 
 
 def get_sj_statistic():
@@ -41,7 +33,7 @@ def get_sj_statistic():
 
             for vacancy in response.json()["objects"]:
                 if vacancy["currency"] == "rub":
-                    average_vacancy_salary += predict_rub_salary_sJ(vacancy)
+                    average_vacancy_salary += predict_rub_salary(vacancy["payment_from"], vacancy["payment_to"])
                     vacancies_processed_sj += 1
                 
             if vacancies_processed_sj:

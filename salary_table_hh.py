@@ -1,15 +1,7 @@
 import requests
 from itertools import count
 import os
-
-
-def predict_rub_salary_hh(vacancy_salary):
-    if vacancy_salary["from"] and vacancy_salary["to"]:
-        return int((vacancy_salary["from"] + vacancy_salary["to"])/2)
-    elif vacancy_salary["to"]:
-        return int(vacancy_salary["to"] * 0.8)
-    else:
-        return int(vacancy_salary["from"] * 1.2)
+from tools import predict_rub_salary
 
 
 def get_hh_statistic():
@@ -36,7 +28,7 @@ def get_hh_statistic():
             for vacancy in response.json()["items"]:
                 vacancy_salary = vacancy["salary"]
                 if vacancy_salary["currency"] == "RUR":
-                    total_salary += predict_rub_salary_hh(vacancy_salary)
+                    total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
                     vacancies_processed += 1
                 
             average_salary = int(total_salary/vacancies_processed)
