@@ -4,12 +4,12 @@ import os
 
 
 def predict_rub_salary_hh(vacancy_salary):
-    if vacancy_salary["from"] == None:
-        return int(vacancy_salary["to"] * 0.8)
-    elif vacancy_salary["to"] == None:
-        return int(vacancy_salary["from"] * 1.2)
-    else:
+    if vacancy_salary["from"] and vacancy_salary["to"]:
         return int((vacancy_salary["from"] + vacancy_salary["to"])/2)
+    elif vacancy_salary["to"]:
+        return int(vacancy_salary["to"] * 0.8)
+    else:
+        return int(vacancy_salary["from"] * 1.2)
 
 
 def get_hh_statistic():

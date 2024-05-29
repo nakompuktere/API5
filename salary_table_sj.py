@@ -25,7 +25,7 @@ def get_sj_statistic():
         for page in range(5):
 
             headers = {
-                "X-Api-App-Id": secret_key_sj
+                "X-Api-App-Id": sj_secret_key
             }
 
             payload = {
@@ -44,7 +44,7 @@ def get_sj_statistic():
                     average_vacancy_salary += predict_rub_salary_sJ(vacancy)
                     vacancies_processed_sj += 1
                 
-            if vacancies_processed_sj != 0:
+            if vacancies_processed_sj:
                 average_salary_sj = int(average_vacancy_salary/vacancies_processed_sj)
             else:
                 average_salary_sj = 0
