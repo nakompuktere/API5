@@ -18,7 +18,7 @@ def get_hh_statistic():
     hh_statistic = { }
 
     for language in languages:
-        vacancy_average = 0
+        total_salary = 0
         vacancies_processed = 0
         for page in count(0, 1):
             payload = {
@@ -36,10 +36,10 @@ def get_hh_statistic():
             for vacancy in response.json()["items"]:
                 vacancy_salary = vacancy["salary"]
                 if vacancy_salary["currency"] == "RUR":
-                    vacancy_average += predict_rub_salary_hh(vacancy_salary)
+                    total_salary += predict_rub_salary_hh(vacancy_salary)
                     vacancies_processed += 1
                 
-            average_salary = int(vacancy_average/vacancies_processed)
+            average_salary = int(total_salary/vacancies_processed)
                 
             hh_statistic[language] = {
                 "average_salary": average_salary,
