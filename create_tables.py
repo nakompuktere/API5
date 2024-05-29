@@ -15,13 +15,13 @@ def create_terminaltables(vacancy_statistic, title):
             statistic["average_salary"]
         ])
     table = AsciiTable(table_data, title)
-    print(table.table) 
+    return table.table
     
 def main():
     title_hh = "Headhunter Moscow"
     title_sj = "SuperJob Moscow"
-    create_terminaltables(get_hh_statistic(), title_hh)
-    create_terminaltables(get_sj_statistic(), title_sj)
+    print(create_terminaltables(get_hh_statistic(), title_hh))
+    print(create_terminaltables(get_sj_statistic(), title_sj))
 
 if __name__ == "__main__":
     main()
