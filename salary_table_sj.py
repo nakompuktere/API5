@@ -21,11 +21,11 @@ def get_sj_statistic():
             }
 
             payload = {
-            "count": 100,
-            "keyword": language,
-            "catalogues": 48,
-            "town": "Moscow",
-            "page": page
+                "count": 100,
+                "keyword": language,
+                "catalogues": 48,
+                "town": "Moscow",
+                "page": page
             }
 
             response = requests.get(url, headers=headers, params=payload)
@@ -42,9 +42,9 @@ def get_sj_statistic():
                 average_salary_sj = 0
                 
             vacancies_sj[language] = {
-            "average_salary": average_salary_sj,
-            "vacancies_found": response.json()["total"], 
-            "vacancies_processed": vacancies_processed_sj
+                "average_salary": average_salary_sj,
+                "vacancies_found": response.json()["total"], 
+                "vacancies_processed": vacancies_processed_sj
             }
         
     return vacancies_sj
