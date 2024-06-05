@@ -1,12 +1,8 @@
 import requests
-import os
-from dotenv import load_dotenv
 from tools import predict_rub_salary
 
 
-def get_sj_statistic():
-    load_dotenv()
-    sj_secret_key = os.getenv("SJ_SECRET_KEY")
+def get_sj_statistic(sj_secret_key):
     languages = ["python", "JavaScript", "Ruby", "Java", "PHP", "C++", "C#", "C"]
     url = "https://api.superjob.ru/2.0/vacancies/"
     vacancies_sj = { }
