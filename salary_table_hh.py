@@ -22,10 +22,12 @@ def get_hh_statistic():
             }
             response = requests.get(url, params=payload)
             response.raise_for_status()
-            if page >= response.json()["pages"] - 1:
+            total_pages = response.json()["pages"]
+            vacancies = response.json()["items"]
+            if page >= total_pages - 1:
                 break
 
-            for vacancy in response.json()["items"]:
+            for vacancy in vacancies:
                 vacancy_salary = vacancy["salary"]
                 if vacancy_salary["currency"] == "RUR":
                     total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
