@@ -26,8 +26,9 @@ def get_sj_statistic(sj_secret_key):
 
             response = requests.get(url, headers=headers, params=payload)
             response.raise_for_status()
-
-            for vacancy in response.json()["objects"]:
+            vacancies = response.json()["objects"]
+            total_vacancies = response.json()["total"]
+            for vacancy in vacancies:
                 if vacancy["currency"] == "rub":
                     average_vacancy_salary += predict_rub_salary(vacancy["payment_from"], vacancy["payment_to"])
                     vacancies_processed_sj += 1
@@ -39,7 +40,7 @@ def get_sj_statistic(sj_secret_key):
                 
             vacancies_sj[language] = {
                 "average_salary": average_salary_sj,
-                "vacancies_found": response.json()["total"], 
+                "vacancies_found": total_vacancies, 
                 "vacancies_processed": vacancies_processed_sj
             }
         
