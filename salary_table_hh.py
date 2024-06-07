@@ -20,7 +20,6 @@ def get_hh_statistic():
                 "area": town_id,
                 "text": f"Программист {language}",
                 "per_page": per_page,
-                "only_with_salary": "true"
             }
             response = requests.get(url, params=payload)
             response.raise_for_status()
@@ -31,10 +30,11 @@ def get_hh_statistic():
 
             for vacancy in vacancies:
                 vacancy_salary = vacancy["salary"]
-                if vacancy_salary["currency"] == "RUR":
-                    total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
-                    if total_salary > 0:
-                        vacancies_processed += 1
+                if vacancy_salary:
+                    if vacancy_salary["currency"] == "RUR":
+                        total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
+                        if total_salary > 0:
+                            vacancies_processed += 1
         try:
             average_salary = int(total_salary/vacancies_processed)
         except ZeroDivisionError:
