@@ -8,6 +8,8 @@ def get_hh_statistic():
     url = "https://api.hh.ru/vacancies"
     languages = ["python", "JavaScript", "Ruby", "Java", "PHP", "C++", "C#", "C"]
     hh_statistic = { }
+    town_id = 1
+    per_page = 100
 
     for language in languages:
         total_salary = 0
@@ -15,9 +17,9 @@ def get_hh_statistic():
         for page in count(0, 1):
             payload = {
                 "page": page,
-                "area": 1,
+                "area": town_id,
                 "text": f"Программист {language}",
-                "per_page": 100,
+                "per_page": per_page,
                 "only_with_salary": "true"
             }
             response = requests.get(url, params=payload)
@@ -31,13 +33,17 @@ def get_hh_statistic():
                 vacancy_salary = vacancy["salary"]
                 if vacancy_salary["currency"] == "RUR":
                     total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
-                    vacancies_processed += 1
-                
+                    if total_salary > 0:
+                        vacancies_processed += 1
+        try:
             average_salary = int(total_salary/vacancies_processed)
-                
-            hh_statistic[language] = {
-                "average_salary": average_salary,
-                "vacancies_found": response.json()["found"], 
-                "vacancies_processed": vacancies_processed
-            }
+        except ZeroDivisionError:
+            average_salary = 0
+
+
+        hh_statistic[language] = {
+            "average_salary": average_salary,
+            "vacancies_found": response.json()["found"], 
+            "vacancies_processed": vacancies_processed
+        }
     return hh_statistic
