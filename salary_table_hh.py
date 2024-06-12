@@ -32,8 +32,7 @@ def get_hh_statistic():
                 vacancy_salary = vacancy["salary"]
                 if vacancy_salary and vacancy_salary["currency"] == "RUR":
                     total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
-                    if total_salary > 0:
-                        vacancies_processed += 1
+                    vacancies_processed += 1
         try:
             average_salary = int(total_salary/vacancies_processed)
         except ZeroDivisionError:
