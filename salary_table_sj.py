@@ -29,14 +29,14 @@ def get_sj_statistic(sj_secret_key):
 
             response = requests.get(url, headers=headers, params=payload)
             response.raise_for_status()
-            vacancies = response.json()["objects"]
-            total_vacancies = response.json()["total"]
+            super_job_results = response.json()
+            vacancies = super_job_results["objects"]
+            total_vacancies = super_job_results["total"]
             for vacancy in vacancies:
                 if vacancy["currency"] == "rub":
                     average_vacancy_salary += predict_rub_salary(vacancy["payment_from"], vacancy["payment_to"])
-                    if average_vacancy_salary > 0:
-                        vacancies_processed_sj += 1
-            if not response.json()["more"]:
+                    vacancies_processed_sj += 1
+            if not super_job_results["more"]:
                 break
 
         if vacancies_processed_sj:

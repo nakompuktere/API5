@@ -23,8 +23,9 @@ def get_hh_statistic():
             }
             response = requests.get(url, params=payload)
             response.raise_for_status()
-            total_pages = response.json()["pages"]
-            vacancies = response.json()["items"]
+            head_hunter_results = response.json()
+            total_pages = head_hunter_results["pages"]
+            vacancies = head_hunter_results["items"]
             if page >= total_pages - 1:
                 break
 
@@ -41,7 +42,7 @@ def get_hh_statistic():
 
         hh_statistic[language] = {
             "average_salary": average_salary,
-            "vacancies_found": response.json()["found"], 
+            "vacancies_found": head_hunter_results["found"], 
             "vacancies_processed": vacancies_processed
         }
     return hh_statistic
