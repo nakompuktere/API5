@@ -33,7 +33,7 @@ def get_sj_statistic(sj_secret_key):
             vacancies = super_job_results["objects"]
             total_vacancies = super_job_results["total"]
             for vacancy in vacancies:
-                if vacancy["currency"] == "rub":
+                if (vacancy["payment_from"] or vacancy["payment_to"]) and vacancy["currency"] == "rub":
                     average_vacancy_salary += predict_rub_salary(vacancy["payment_from"], vacancy["payment_to"])
                     vacancies_processed_sj += 1
             if not super_job_results["more"]:
