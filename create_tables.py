@@ -24,7 +24,7 @@ def main():
     title_hh = "Headhunter Moscow"
     title_sj = "SuperJob Moscow"
     print(create_terminaltables(get_hh_statistic(), title_hh))
-    #print(create_terminaltables(get_sj_statistic(sj_secret_key), title_sj))
+    print(create_terminaltables(get_sj_statistic(sj_secret_key), title_sj))
 
 if __name__ == "__main__":
     main()
