@@ -32,7 +32,7 @@ def get_hh_statistic():
             for vacancy in vacancies:
                 vacancy_salary = vacancy["salary"]
                 if vacancy_salary and vacancy_salary["currency"] == "RUR":
-                    if vacancy_salary != 0:
+                    if vacancy_salary["from"] or vacancy_salary["to"]:
                         total_salary += predict_rub_salary(vacancy_salary["from"], vacancy_salary["to"])
                         vacancies_processed += 1
         try:
